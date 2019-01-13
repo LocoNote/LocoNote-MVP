@@ -52,7 +52,10 @@ public class CreateNoteActivity extends AppCompatActivity {
                 Message message = new Message(finalMessage,currLoc);
                 DatabaseReference noteKey = noteReference.child("Notes").push();
                 noteKey.setValue(message);
-                Toast.makeText(CreateNoteActivity.this,"done",Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateNoteActivity.this,"Done",Toast.LENGTH_SHORT).show();
+                Intent intent1 = new Intent(CreateNoteActivity.this, MapsActivity.class);
+                startActivity(intent1);
+                finish();
 
 
             }

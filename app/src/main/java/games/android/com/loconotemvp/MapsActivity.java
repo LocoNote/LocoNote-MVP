@@ -1,9 +1,11 @@
 package games.android.com.loconotemvp;
 
 import android.Manifest;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,9 +30,20 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
+import games.android.com.loconotemvp.Constants;
+
+import static android.os.Build.VERSION_CODES.M;
 
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
     private static final String TAG = "MapActivity",
             FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION,
             COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -47,7 +62,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private games.android.com.loconotemvp.LatLng currLoc;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private DatabaseReference noteBase;
 
+    private GeofencingClient mGeofencingClient;
+    private Constants consta;
 
 
 
@@ -55,6 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        consta = new Constants();
         Button createNote = (Button) findViewById(R.id.createButton);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -63,9 +82,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         getLocationPermission();
         currZoomValue = DEFAULT_ZOOM;
         getDeviceLocation();
+        mGeofencingClient = LocationServices.getGeofencingClient(this);
+        noteBase = FirebaseDatabase.getInstance().getReference("Notes");
+
+        noteBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot noteSnapShot: dataSnapshot.getChildren()){
+
+                    Message msg = noteSnapShot.getValue(Message.class);
+                    LatLng msgLoc = new LatLng(msg.getLatLng().getLatitude(),msg.getLatLng().getLongitude());
+                    LatLng curLoc = new LatLng(getCurrPosLatLng().latitude,getCurrPosLatLng().longitude);
+                    if(isNearby(msgLoc,curLoc)){
+                        AddMarker(msg);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         if(currPosLatLng != null) {
-            cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
+            cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(45).bearing(0f).build();
         }
 
 
@@ -91,22 +133,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 finish();
             }
         });
-
     }
+
+
     public LatLng getCurrPosLatLng() {
         return currPosLatLng;
     }
 
+    public void AddMarker(Message message){
+        mMap.addMarker(new MarkerOptions()
+                .position(new LatLng(message.getLatLng().getLatitude(),message.getLatLng().getLongitude()))
+                .title(message.getMesssage()));
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+    }
+
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -161,8 +202,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             // current location marker
                             Location currentLocation = (Location)task.getResult();
                             currPosLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                            cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(DEFAULT_ZOOM).tilt(0f).bearing(0f).build();
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            cameraPosition = CameraPosition.builder().target(currPosLatLng).zoom(21).tilt(45).bearing(0f).build();
+                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 21);
 
 
                             // add job marker
@@ -187,4 +228,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void moveCamera(LatLng latLng, float zoom) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
+
+    private boolean isNearby(LatLng marker, LatLng currLoc){
+        double x1 = marker.latitude;
+        double y1 = marker.longitude;
+        double x2 = currLoc.latitude;
+        double y2 = currLoc.longitude;
+        double theta = y1 - y2;
+        double dist = Math.sin(Math.toRadians(x1)) * Math.sin(Math.toRadians(x2)) + Math.cos(Math.toRadians(x1)) * Math.cos(Math.toRadians(x2)) * Math.cos(Math.toRadians(theta));
+        dist = Math.acos(dist);
+        dist = Math.toDegrees(dist);
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1609.3444;
+        return (dist<10);
+    }
+
 }

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LocoNoteMVP.iml" filepath="$PROJECT_DIR$/LocoNoteMVP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LocoNote-MVP.iml" filepath="$PROJECT_DIR$/LocoNote-MVP.iml" />
+      <module fileurl="file://C:\Users\paen3\OneDrive\Desktop\SBHacks\LocoNew\LocoNote-MVP\LocoNoteMVP.iml" filepath="C:\Users\paen3\OneDrive\Desktop\SBHacks\LocoNew\LocoNote-MVP\LocoNoteMVP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\paen3\OneDrive\Desktop\SBHacks\LocoNew\LocoNote-MVP\app\app.iml" filepath="C:\Users\paen3\OneDrive\Desktop\SBHacks\LocoNew\LocoNote-MVP\app\app.iml" />
     </modules>
   </component>
 </project>
