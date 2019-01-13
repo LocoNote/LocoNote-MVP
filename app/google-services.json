@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1073904661192",
+    "firebase_url": "https://loconotemvp.firebaseio.com",
+    "project_id": "loconotemvp",
+    "storage_bucket": "loconotemvp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073904661192:android:bbcb8311eff005d7",
+        "android_client_info": {
+          "package_name": "games.android.com.loconotemvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073904661192-jh29lt7gitrsffk3jc2vi4vlcdiehqr2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "games.android.com.loconotemvp",
+            "certificate_hash": "aba57643983a9f0f6666002b9104fabd459c3fb1"
+          }
+        },
+        {
+          "client_id": "1073904661192-trtkfkdp99tppp0bogvtpcn4f344mu28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBk9kSjqK4JvhshAaZGpwXxJFK_k3p7TIU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073904661192-trtkfkdp99tppp0bogvtpcn4f344mu28.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

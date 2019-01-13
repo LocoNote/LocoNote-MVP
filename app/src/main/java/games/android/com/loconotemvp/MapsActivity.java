@@ -1,6 +1,7 @@
 package games.android.com.loconotemvp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.annotation.NonNull;
@@ -44,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private CameraPosition cameraPosition;
     private TextView zoomText;
     private GoogleMap mMap;
+    private games.android.com.loconotemvp.LatLng currLoc;
     private FusedLocationProviderClient fusedLocationProviderClient;
 
 
@@ -76,10 +78,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         createNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+
+                double lat = getCurrPosLatLng().latitude;
+                double lng = getCurrPosLatLng().longitude;
+                Intent intent = new Intent(MapsActivity.this, CreateNoteActivity.class);
+                Bundle extras = new Bundle();
+                extras.putDouble("lat",lat);
+                extras.putDouble("lng",lng);
+                intent.putExtras(extras);
+
+                startActivity(intent);
+                finish();
             }
         });
 
+    }
+    public LatLng getCurrPosLatLng() {
+        return currPosLatLng;
     }
 
 
