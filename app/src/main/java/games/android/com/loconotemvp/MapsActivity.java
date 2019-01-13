@@ -4,6 +4,9 @@ import android.Manifest;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -25,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -141,9 +146,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void AddMarker(Message message){
+        BitmapDescriptor icon = BitmapDescriptorFactory.fromResource(R.drawable.happy);
+        String type = message.getType().toString();
+        if(type.equals("cool")) icon = BitmapDescriptorFactory.fromResource(R.drawable.cool);
+        if(type.equals("happy")) icon = BitmapDescriptorFactory.fromResource(R.drawable.happy);
+        if(type.equals("laughing")) icon = BitmapDescriptorFactory.fromResource(R.drawable.laughing);
+        if(type.equals("love")) icon = BitmapDescriptorFactory.fromResource(R.drawable.love);
+        if(type.equals("sad")) icon = BitmapDescriptorFactory.fromResource(R.drawable.sad);
+        if(type.equals("surprise")) icon = BitmapDescriptorFactory.fromResource(R.drawable.surprise);
+        if(type.equals("weird")) icon = BitmapDescriptorFactory.fromResource(R.drawable.weird);
+
         mMap.addMarker(new MarkerOptions()
                 .position(new LatLng(message.getLatLng().getLatitude(),message.getLatLng().getLongitude()))
-                .title(message.getMesssage()));
+                .title(message.getMesssage()).icon(icon));
 
     }
 
@@ -242,5 +257,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         dist = dist * 1609.3444;
         return (dist<10);
     }
+//    public BitmapDescriptor resizeBitmap(int drawable, int width, int height){
+//        BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(drawableName);
+//        Bitmap b=bitmapdraw.getBitmap();
+//
+//        BitmapDescriptor imageBitmap = BitmapDescriptorFactory.fromBitmap(b);
+//        return BitmapDescriptorFactory.fromResource(imageBitmap).
+//        (imageBitmap, width, height, false);
+//    }
 
 }

@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -15,6 +17,9 @@ import games.android.com.loconotemvp.MapsActivity;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CreateNoteActivity extends AppCompatActivity {
 
     private Button submitNote;
@@ -22,6 +27,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private LatLng currLoc;
     private double lat, lng;
     private DatabaseReference noteReference;
+    private String[] emotions = {"cool","happy","laughing","love","sad","surprise","weird"};
 
 
 
@@ -31,6 +37,19 @@ public class CreateNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_note);
 
         Intent intent = getIntent();
+        List<String> spinnerArray =  new ArrayList<String>();
+
+        for(int i = 0; i<7; i++){
+            spinnerArray.add(emotions[i]);
+        }
+
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, spinnerArray);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final Spinner sItems = (Spinner) findViewById(R.id.MySpinner);
+        sItems.setAdapter(adapter);
 
         Bundle extras = intent.getExtras();
 
@@ -49,13 +68,17 @@ public class CreateNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String finalMessage = messageText.getText().toString();
-                Message message = new Message(finalMessage,currLoc);
-                DatabaseReference noteKey = noteReference.child("Notes").push();
-                noteKey.setValue(message);
-                Toast.makeText(CreateNoteActivity.this,"Done",Toast.LENGTH_SHORT).show();
-                Intent intent1 = new Intent(CreateNoteActivity.this, MapsActivity.class);
-                startActivity(intent1);
-                finish();
+                String tag = sItems.getSelectedItem().toString();
+                if(tag != null && finalMessage != null){
+                    Message message = new Message(finalMessage,currLoc,tag);
+                    DatabaseReference noteKey = noteReference.child("Notes").push();
+                    noteKey.setValue(message);
+                    Toast.makeText(CreateNoteActivity.this,tag,Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(CreateNoteActivity.this, MapsActivity.class);
+                    startActivity(intent1);
+                    finish();
+                }
+
 
 
             }
