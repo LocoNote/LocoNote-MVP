@@ -21,8 +21,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:textColor="@android:color/white"
             android:layout_marginBottom="48dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:text="Create a new LocoNote" />
     </RelativeLayout>
 
