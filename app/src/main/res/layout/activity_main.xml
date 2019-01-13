@@ -1,89 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="games.android.com.loconotemvp.MainActivity">
+    tools:context="games.android.com.loconotemvp.MapsActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v4.view.ViewPager>
-
-    <TextView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/gradientdrawable"/>
-    
-    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@drawable/gradient"-->
-        <!--tools:layout_editor_absoluteX="0dp"-->
-        <!--tools:layout_editor_absoluteY="0dp">-->
+        android:background="@drawable/gradient"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <!--<TextView-->
-            <!--android:id="@+id/gradientTextView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="center"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="25dp"-->
-            <!--android:textStyle="bold" />-->
+        <TextView
+            android:id="@+id/gradientTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-        <!--<ImageView-->
-            <!--android:id="@+id/earthImageView"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="182dp"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_marginStart="0dp"-->
-            <!--android:layout_marginTop="329dp"-->
-            <!--android:layout_marginEnd="0dp"-->
-            <!--android:cropToPadding="false"-->
-            <!--app:srcCompat="@drawable/earth" />-->
+        <ImageView
+            android:id="@+id/earthImageView"
+            android:layout_width="match_parent"
+            android:layout_height="182dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="385dp"
+            android:layout_marginEnd="0dp"
+            android:cropToPadding="false"
+            app:srcCompat="@drawable/earth" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/titleTextView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_marginTop="109dp"-->
-            <!--android:layout_marginEnd="95dp"-->
-            <!--android:fontFamily="@font/bevan"-->
-            <!--android:text="LocoNote"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="36sp" />-->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="109dp"
+            android:layout_marginEnd="95dp"
+            android:fontFamily="@font/bevan"
+            android:text="LocoNote"
+            android:textColor="@color/white"
+            android:textSize="36sp" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/textView"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginStart="10dp"-->
-            <!--android:layout_marginTop="172dp"-->
-            <!--android:fontFamily="@font/arbutus_slab"-->
-            <!--android:text="Pin a note right where you are!"-->
-            <!--android:textSize="24sp" />-->
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="172dp"
+            android:fontFamily="@font/arbutus_slab"
+            android:text="Pin a note right where you are!"
+            android:textSize="24sp" />
 
-        <!--<ImageView-->
-            <!--android:id="@+id/imageView"-->
-            <!--android:layout_width="97dp"-->
-            <!--android:layout_height="111dp"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_marginEnd="132dp"-->
-            <!--android:layout_marginBottom="136dp"-->
-            <!--app:srcCompat="@drawable/pin" />-->
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="97dp"
+            android:layout_height="111dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="132dp"
+            android:layout_marginBottom="136dp"
+            app:srcCompat="@drawable/pin" />
 
-    <!--</RelativeLayout>-->
-    
+    </RelativeLayout>
 
-</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
